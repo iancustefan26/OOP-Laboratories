@@ -32,3 +32,7 @@ void NumberList::Print() {
 	std::cout << "\n";
 	//delete[] this->numbers;
 }
+
+void NumberList::Deallocate() {
+	delete[] this->numbers;
+}
