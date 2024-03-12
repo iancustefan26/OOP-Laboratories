@@ -45,7 +45,7 @@ int Math::Add(int count, ...) {
 
 	return result;
 }
-*/
+*/	//VARIANTA CU MODULES
 
 int Math::Add(int count, ...) {
 	int* p = &count;
