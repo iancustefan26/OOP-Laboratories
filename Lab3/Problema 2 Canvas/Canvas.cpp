@@ -59,7 +59,6 @@ void Canvas::DrawCircle(int x, int y, int ray, char ch) {
     int d = 3 - 2 * ray;
 
     while (x1 <= y1) {
-        // Set points in all octants
         SetPoint(centerX + x1, centerY + y1, ch);
         SetPoint(centerX - x1, centerY + y1, ch);
         SetPoint(centerX + x1, centerY - y1, ch);
@@ -79,7 +78,6 @@ void Canvas::DrawCircle(int x, int y, int ray, char ch) {
             d = d + 4 * x1 + 6;
         }
 
-        // Handle the case where the circle is drawn on the canvas boundary
         if (x1 > y1)
             break;
     } 
