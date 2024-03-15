@@ -7,9 +7,13 @@ class Canvas
 {
     int width;
     int height;
-    char matrix[100][100] = {' '};
+    char **matrix;
 public:
-    Canvas(int width, int height) : width(width), height(height) {};
+    Canvas(int width, int height) : width(width), height(height) {
+        matrix = new char* [height];
+    for (int i = 0;i < height;i++)
+        matrix[i] = new char[width];
+    };
     void DrawCircle(int x, int y, int ray, char ch);
     void FillCircle(int x, int y, int ray, char ch);
     void DrawRect(int left, int top, int right, int bottom, char ch);
@@ -18,6 +22,7 @@ public:
     void DrawLine(int x1, int y1, int x2, int y2, char ch);
     void Print(); // shows what was printed
     void Clear(); // clears the canvas
+    void Deallocate();
 };
 
 

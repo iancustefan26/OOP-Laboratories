@@ -82,3 +82,10 @@ void Canvas::DrawCircle(int x, int y, int ray, char ch) {
             break;
     } 
 }
+
+void Canvas::Deallocate()
+{
+    for (int i = 0;i < height;i++)
+        delete[] matrix[i];
+    delete[] matrix;
+}
