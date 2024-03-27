@@ -27,22 +27,19 @@ Number Number::operator=(Number&& other) noexcept{
 }
 
 char* int_to_char(int number) {
-	// Determine the size of the resulting character array
-	int size = 1; // Start with space for the null terminator
+	int size = 1;
 	int temp = abs(number);
 	while (temp /= 10) size++;
 
-	// Allocate memory for the character array
-	char* char_array = new char[size + 1]; // Plus one for the null terminator
+	char* char_array = new char[size + 1];
 
-	// Convert the integer to a character array
 	char* ptr = char_array;
 	if (number < 0) {
-		*ptr++ = '-'; // Handle negative numbers
+		*ptr++ = '-';
 		number = -number;
 	}
 	ptr += size;
-	*ptr-- = '\0'; // Null-terminate the string
+	*ptr-- = '\0';
 
 	do {
 		*ptr-- = '0' + (number % 10);
@@ -58,12 +55,26 @@ int max(int x, int y) {
 	return y;
 }
 
-Number operator+(Number& x, Number&y){
+Number operator+(Number x, Number y){
 	unsigned int base_x = x.GetBase();
 	unsigned int base_y = y.GetBase();
 	x.SwitchBase(10);
 	y.SwitchBase(10);
 	int sum = std::atoi(x.value) + std::atoi(y.value);
+	Number my(int_to_char(sum), 10);
+	my.SwitchBase(max(base_x, base_y));
+	x.SwitchBase(base_x);
+	y.SwitchBase(base_y);
+
+	return my;
+}
+
+Number operator-(Number x, Number y) {
+	unsigned int base_x = x.GetBase();
+	unsigned int base_y = y.GetBase();
+	x.SwitchBase(10);
+	y.SwitchBase(10);
+	int sum = std::atoi(x.value) - std::atoi(y.value);
 	Number my(int_to_char(sum), 10);
 	my.SwitchBase(max(base_x, base_y));
 	x.SwitchBase(base_x);

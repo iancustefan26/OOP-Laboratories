@@ -15,7 +15,11 @@ public:
 	Number(const Number& n);
 	Number operator=(Number&& other) noexcept;
 
-	friend Number operator+ (Number& x, Number &y);
+	friend Number operator+ (Number x, Number y);
+	friend Number operator- (Number x, Number y);
+	char& operator[] (int index) {
+		return this->value[index];
+	};
 
 	void SwitchBase(int newBase);
 	void Print();
