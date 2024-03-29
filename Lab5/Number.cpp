@@ -1,31 +1,6 @@
 #include "Number.h"
 #pragma warning(disable: 4996)
 
-Number::Number(const char* value, int base) {
-	this->value = new char[strlen(value) + 1];
-	this->base = base;
-	strcpy(this->value, value);
-}
-
-Number::Number(const Number& n) {
-	this->base = n.base;
-	this->value = new char[strlen(n.value) + 1];
-	strcpy(this->value, n.value);
-}
-
-Number Number::operator=(Number&& other) noexcept{
-	if (this != &other) {
-		delete[] value;
-		value = new char[strlen(other.value) + 1];
-		strcpy(value, other.value);
-		base = other.base;
-
-		other.value = nullptr;
-		other.base = 0;
-	}
-	return *this;
-}
-
 char* int_to_char(int number) {
 	int size = 1;
 	int temp = abs(number);
@@ -47,6 +22,80 @@ char* int_to_char(int number) {
 	} while (number != 0);
 
 	return char_array;
+}
+
+Number::Number(const char* value, int base) {
+	this->value = new char[strlen(value) + 1];
+	this->base = base;
+	strcpy(this->value, value);
+}
+
+
+Number::Number(const unsigned int n) {
+	char* buffer = new char[100];
+	strcpy(buffer, int_to_char(n));		//Asta e problema
+	this->value = new char[strlen(buffer) + 1];
+	strcpy(this->value, buffer);
+	this->base = 10;
+	delete[] buffer;
+}
+
+Number::Number(const Number& n) {
+	this->base = n.base;
+	this->value = new char[strlen(n.value) + 1];
+	strcpy(this->value, n.value);
+}
+
+Number::Number(Number&& n) noexcept{
+	strcpy(this->value, n.value);
+	this->base = n.base;
+	n.value = nullptr;
+	n.base = 0;
+}
+
+bool Number::operator<(const Number& n) {
+	return GetBase10() < n.GetBase10();
+}
+
+bool Number::operator<=(const Number& n) {
+	return GetBase10() <= n.GetBase10();
+}
+
+bool Number::operator>(const Number& n) {
+	return GetBase10() > n.GetBase10();
+}
+
+bool Number::operator>=(const Number& n) {
+	return GetBase10() >= n.GetBase10();
+}
+
+void Number::operator=(const char* buffer) {
+	strcpy(this->value, buffer);
+}
+
+void Number::operator=(const unsigned int n) {
+	char* buffer = int_to_char(n);
+	strcpy(this->value, buffer);
+	delete[] buffer;
+}
+
+void Number::operator+=(Number& n) {
+	Number x = *this + n;
+	strcpy(this->value, x.value);
+	this->base = x.base;
+}
+
+Number Number::operator=(Number&& other) noexcept{
+	if (this != &other) {
+		delete[] value;
+		value = new char[strlen(other.value) + 1];
+		strcpy(value, other.value);
+		base = other.base;
+
+		other.value = nullptr;
+		other.base = 0;
+	}
+	return *this;
 }
 
 int max(int x, int y) {
@@ -125,4 +174,5 @@ void Number::SwitchBase(int newBase) {
 		value[j] = array[i - j - 1];
 	value[i] = '\0';
 	this->base = newBase;
+	delete[] array;
 }
