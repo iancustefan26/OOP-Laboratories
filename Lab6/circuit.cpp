@@ -1,4 +1,5 @@
 #include "Circuit.h"
+#include <algorithm>
 #pragma warning(disable: 4996)
 
 Circuit::Circuit() {
@@ -25,10 +26,15 @@ void Circuit::Race() {
 	times = new Times[number_of_cars + 1];
 	for(int i = 0; i < number_of_cars; ++i)
 		if (cars[i]->getFuelTank() < float(lenght / 100 * cars[i]->getFuelConsumption())) {
+			losers[number_of_losers] = new char[strlen(cars[i]->getName()) + 1];
+			strcpy(losers[number_of_losers], cars[i]->getName());
+			number_of_losers++;
+			/*
 			char* temp = *losers + number_of_losers;
 			temp = new char[strlen(cars[i]->getName()) + 1];
 			strcpy(temp, cars[i]->getName());
 			number_of_losers++;
+			*/
 		}
 		else {
 			times[i].name = new char[strlen(cars[i]->getName()) + 1];
@@ -38,6 +44,7 @@ void Circuit::Race() {
 }
 
 void Circuit::ShowFinalRanks() {
+	Sort();
 	std::cout << "Race Ranks: \n-------------\n";
 	for (int i = 0; i < number_of_cars; ++i)
 		if (times[i].time)
@@ -47,13 +54,21 @@ void Circuit::ShowFinalRanks() {
 }
 
 void Circuit::ShowWhoDidNotFinish() {
-	std::cout << "\n-------------\nCars which remained out of fuel during the race: \n";
+	std::cout << "\n-------------\nCars which remained out of fuel during the race: \n\n";
 	for (int i = 0; i < number_of_losers; ++i)
-		std::cout << *losers[i] << "\n";
+		std::cout << i + 1 << ". " << losers[i] << "\n";
+}
+
+bool compareByTime(Times& a, Times& b) {
+	return a.time > b.time;
+}
+
+void Circuit::Sort() {
+	std::sort(times, times + number_of_cars, compareByTime);
 }
 
 Circuit::~Circuit() {
 	//delete cars;
 	delete[] times;
-	delete[] losers;
+	//delete[] losers;
 }

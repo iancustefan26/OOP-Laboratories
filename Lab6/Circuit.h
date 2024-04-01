@@ -16,9 +16,11 @@ private:
 	int lenght;
 	int number_of_cars;
 	Car* cars[20] = {nullptr};
-	Times* times; //in seconds
-	char** losers;
+	Times* times; //in hours
+	char* losers[20] = { nullptr };
 	int number_of_losers;
+
+	void Sort();
 public:
 	Circuit();
 	void SetLenght(int lenght);
