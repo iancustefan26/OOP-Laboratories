@@ -17,9 +17,6 @@ public:
 	void lowerHealth(unsigned int damage) {
 		this->health -= damage;
 	}
-	~Buttercup() {
-		delete[] name;
-	}
 };
 
 #endif // !

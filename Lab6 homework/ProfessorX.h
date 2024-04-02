@@ -8,7 +8,7 @@
 
 struct Girls {
 	PowerPuff* girl;
-	bool alive;
+	bool alive = 1;
 };
 
 class ProffesorX {
@@ -17,7 +17,7 @@ private:
 	int spice;
 	int everything_nice;
 	int number_of_girls;
-	Girls** girls;
+	Girls* girls[20];
 	int alive;
 private:
 	int min(int a, int b, int c) {
@@ -44,9 +44,9 @@ private:
 	}
 	void createPowerPuffs() {
 		number_of_girls = min(sugar, spice, everything_nice);
-		girls = new Girls * [number_of_girls];
+
 		for (int i = 0; i < number_of_girls; ++i)
-			girls[i]->girl = newGirl(), girls[i]->alive = true;
+			girls[i] = new Girls, girls[i]->girl = newGirl(), girls[i]->alive = true;
 		alive = number_of_girls;
 	}
 public:
@@ -55,7 +55,7 @@ public:
 		spice = 0;
 		everything_nice = 0;
 		number_of_girls = 0;
-		for(int i = 0; i < size; ++i)
+		for(int i = 0; i < size - 1; ++i)
 			if (strcmp(shop_list[i], "sugar") == 0) 
 				sugar++;
 			else if (strcmp(shop_list[i], "spice") == 0)
@@ -64,10 +64,21 @@ public:
 				everything_nice++;
 		createPowerPuffs();
 	}
-	int powerpuffs_still_alive() {
+	void killPowerPuff(int i) {
+		girls[i]->alive = 0;
+	}
+	void dealDamage(int i, int damage) {
+		girls[i]->girl->lowerHealth(damage);
+	}
+	int getDamage(int i) const{
+		return girls[i]->girl->getDamage();
+	}
+	int powerpuffs_still_alive() const{
 		return alive;
 	}
-	
+	bool powerpuff_still_alive(int i) const{
+		return girls[i]->girl->getHealth() > 0;
+	}
 	~ProffesorX() {
 		for (int i = 0; i < number_of_girls; ++i)
 			delete girls[i];

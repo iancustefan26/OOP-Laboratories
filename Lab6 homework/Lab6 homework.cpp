@@ -32,6 +32,7 @@ Profesorul X a decis sa faca mai multe fetite PowerPuff, si evident are nevoie d
 */
 #include "MojoJojo.h"
 #include "ProfessorX.h"
+#pragma warning(disable : 4996)
 
 class Battle {
     char* winner;
@@ -46,10 +47,29 @@ public:
         int number_of_grils = proffesor_x->powerpuffs_still_alive();
         while (mojojojo->getHealth() > 0 || proffesor_x->powerpuffs_still_alive() > 0) {
             for(int i = 0; i < number_of_grils; ++i)
-                if(proffesor_x->powerpuff_still_alive(i))
-                    mojojojo->dealDamage(proffesor_x->)
-
+                if (proffesor_x->powerpuff_still_alive(i)) {
+                    mojojojo->dealDamage(proffesor_x->getDamage(i));
+                    proffesor_x->dealDamage(i, mojojojo->getDamage());
+                    if (!proffesor_x->powerpuff_still_alive(i))
+                        proffesor_x->killPowerPuff(i);
+                }
+            }
+        if (proffesor_x->powerpuffs_still_alive()) {
+            winner = new char[15];
+            strcpy(winner, "PowerPuffs");
+            return;
         }
+        else {
+            winner = new char[15];
+            strcpy(winner, "MojoJojo");
+            return;
+        }
+    }
+    void ShowWinner() {
+        std::cout << winner << "\n";
+    }
+    ~Battle() {
+        delete[] winner;
     }
 };
 
@@ -61,6 +81,7 @@ int main() {
                               "spice", "sugar" };
     ProffesorX cel_bun(glovo, 14);
     Battle bataia(&cel_bun, &cel_rau);
-
+    bataia.Start();
+    bataia.ShowWinner();
     return 0;
 }

@@ -2,6 +2,7 @@
 #ifndef POWERPUFF_H
 #define POWERPUFF_H
 #include <iostream>
+#pragma warning(disable: 4996)
 
 class PowerPuff {
 protected:
@@ -17,7 +18,9 @@ public:
 	virtual float getHealth() const = 0;
 	virtual float getDamage() const = 0;
 	virtual void lowerHealth(unsigned int damage) = 0;
-	virtual ~PowerPuff() = 0;
+	virtual ~PowerPuff() {
+		delete[] name;
+	}
 };
 
 #endif
