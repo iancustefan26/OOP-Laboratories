@@ -1,20 +1,66 @@
-// Lab6 homework.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+/*
+Profesorul X a decis sa faca mai multe fetite PowerPuff, si evident are nevoie de sugar/spice and everything nice
+    Pt ca ii este lene, da o comanda cu Glovo si ii spune curieruui sa i aduca tot zaharul/condimentele/fainutzul din magazin
+    Implementati clasa abstracta PowerPuffGirl si clasele care mostenesc interfata : Bubbles, Blossom, Buttercup
 
-#include <iostream>
+    Fiecare dintre fetite are
+    Damage, health
 
-int main()
-{
-    std::cout << "Hello World!\n";
+    clasa Profesor care primeste o lista de ingrediente care a reusit curierul sa le cumpere
+    ex: sugar, spice, spice, everything_nice, sugar
+
+    Ca sa creeze o fetita powerpuff are nevoie de
+    1x sugar
+    1x spice
+    1x everything_nice
+
+    O sa creeze cat de multe fetite poate
+    cu o sansa de 33% sa fie ori un ButterCup, ori un Blossom, ori un Bubbles
+
+    clasa MojoJojo
+    care are
+    damage, health
+
+    Si apoi implementati o metoda globala care simuleaza lupta intre MojoJojo si fetitele powerpuff ale profesorului
+
+    Daunele se efectueaza in ture
+    In fiecare tura fetitele dau damage lui MojoJojo
+    si MojoJojo alege o fetita aleatoare care sa o dauneze
+
+    Scrieti o metoda care afiseaza castigatorul bataliei
+    Si o metoda care sa afiseze cate fetite au supravietuit si cu cata viata
+*/
+#include "MojoJojo.h"
+#include "ProfessorX.h"
+
+class Battle {
+    char* winner;
+    MojoJojo* mojojojo;
+    ProffesorX* proffesor_x;
+public:
+    Battle(ProffesorX* a, MojoJojo* b) {
+        mojojojo = b;
+        proffesor_x = a;
+    }
+    void Start() {
+        int number_of_grils = proffesor_x->powerpuffs_still_alive();
+        while (mojojojo->getHealth() > 0 || proffesor_x->powerpuffs_still_alive() > 0) {
+            for(int i = 0; i < number_of_grils; ++i)
+                if(proffesor_x->powerpuff_still_alive(i))
+                    mojojojo->dealDamage(proffesor_x->)
+
+        }
+    }
+};
+
+int main() {
+    MojoJojo cel_rau;
+    const char* glovo[] = { "spice", "sugar", "everything_nice", "sugar",
+                            "sugar", "everything_nice", "sugar", "spice",
+                             "spice", "everything_nice", "everything_nice",
+                              "spice", "sugar" };
+    ProffesorX cel_bun(glovo, 14);
+    Battle bataia(&cel_bun, &cel_rau);
+
+    return 0;
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
